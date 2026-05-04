@@ -20,10 +20,10 @@ r/
     analytics.R
 
 report/
-    .gitkeep
+    report_outline.md
 
 screenshots/
-    .gitkeep
+    README.md
 
 sql/
     01_schema.sql
