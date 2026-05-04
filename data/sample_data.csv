@@ -1,0 +1,6 @@
+trip_id,vehicle_id,driver_id,start_location,end_location,distance_km,delivery_status
+1,V001,D001,North Hub,Central Depot,12.5,Completed
+2,V002,D002,East Hub,West Depot,18.2,Completed
+3,V003,D003,South Hub,North Depot,25.7,Delayed
+4,V004,D004,Central Hub,East Depot,9.8,Completed
+5,V005,D005,West Hub,South Depot,14.3,Cancelled
