@@ -4,3 +4,8 @@ trip_id,vehicle_id,driver_id,start_location,end_location,distance_km,delivery_st
 3,V003,D003,South Hub,North Depot,25.7,Delayed
 4,V004,D004,Central Hub,East Depot,9.8,Completed
 5,V005,D005,West Hub,South Depot,14.3,Cancelled
+6,V002,D002,East Hub,Central Depot,21.6,Completed
+7,V003,D003,South Hub,West Depot,19.4,Delayed
+8,V001,D001,North Hub,East Depot,11.7,Completed
+9,V005,D005,West Hub,Central Depot,16.9,Completed
+10,V004,D004,Central Hub,North Depot,23.1,Delayed
