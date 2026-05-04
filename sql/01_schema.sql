@@ -50,6 +50,7 @@ CREATE TABLE deliveries (
     delivery_date DATE NOT NULL,
     delivery_status VARCHAR(30) NOT NULL,
     delivery_cost DECIMAL(10,2),
+
     FOREIGN KEY (customer_id) REFERENCES customers(customer_id),
     FOREIGN KEY (driver_id) REFERENCES drivers(driver_id),
     FOREIGN KEY (vehicle_id) REFERENCES vehicles(vehicle_id),
