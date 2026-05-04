@@ -37,3 +37,25 @@ sql/
 - R
 - MongoDB Atlas
 - GitHub
+- ## SQL Components
+
+The SQL section contains:
+
+- Database creation
+- Table definitions
+- Primary keys and foreign keys
+- Sample data insertion
+- Analytical queries using joins, filtering, grouping, ordering, and aggregation
+- Query optimisation examples using indexes
+
+## Python Component
+
+The Python script loads the sample logistics dataset, removes duplicate records, converts distance values into numeric format, removes invalid rows, and creates a delivery status summary.
+
+## R Analytics Component
+
+The R script performs basic analytics on the sample logistics dataset, including summary statistics, delivery status counts, average delivery distance, longest route identification, and a basic bar chart.
+
+## MongoDB Component
+
+The MongoDB script demonstrates document-based storage and querying for delivery records. It includes sample document insertion, filtering, aggregation, sorting, and index creation.
