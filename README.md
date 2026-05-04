@@ -6,31 +6,16 @@ This repository contains the database and analytics coursework for the NorthStar
 
 ## Repository Structure
 
-```text
-data/
-    sample_data.csv
-
-mongodb/
-    mongodb_queries.js
-
-python/
-    data_processing.py
-
-r/
-    analytics.R
-
-report/
-    report_outline.md
-
-screenshots/
-    README.md
-
-sql/
-    01_schema.sql
-    02_insert_data.sql
-    03_queries.sql
-    04_optimisation.sql
-```
+- `data/sample_data.csv`
+- `mongodb/mongodb_queries.js`
+- `python/data_processing.py`
+- `r/analytics.R`
+- `report/report_outline.md`
+- `screenshots/README.md`
+- `sql/01_schema.sql`
+- `sql/02_insert_data.sql`
+- `sql/03_queries.sql`
+- `sql/04_optimisation.sql`
 
 ## Technologies Used
 
@@ -77,23 +62,17 @@ The MongoDB script demonstrates document-based storage and querying for delivery
 
 Install pandas if required:
 
-```bash
-pip install pandas
-```
+`pip install pandas`
 
 Run the script from the main project folder:
 
-```bash
-python python/data_processing.py
-```
+`python python/data_processing.py`
 
 ### R
 
 Run the R script from the main project folder:
 
-```r
-source("r/analytics.R")
-```
+`source("r/analytics.R")`
 
 ### MongoDB
 
