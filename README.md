@@ -2,7 +2,7 @@
 
 ## Project Overview
 
-This repository contains the database and analytics coursework for the NorthStar Urban Mobility and Logistics case study. The project demonstrates database design, SQL implementation, Python data processing, R analytics, MongoDB Atlas querying, and query optimisation.
+This repository contains the database and analytics coursework for the NorthStar Urban Mobility and Logistics case study. The project demonstrates relational database design, SQL implementation, Python data processing, R analytics, MongoDB document-based querying, and query optimisation.
 
 ## Repository Structure
 
