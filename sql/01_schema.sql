@@ -1,10 +1,12 @@
--- NorthStar Urban Mobility and Logistics
--- Database Schema
-
 CREATE DATABASE IF NOT EXISTS northstar_logistics;
 USE northstar_logistics;
 
--- Customers table
+DROP TABLE IF EXISTS deliveries;
+DROP TABLE IF EXISTS routes;
+DROP TABLE IF EXISTS vehicles;
+DROP TABLE IF EXISTS drivers;
+DROP TABLE IF EXISTS customers;
+
 CREATE TABLE customers (
     customer_id INT PRIMARY KEY AUTO_INCREMENT,
     customer_name VARCHAR(100) NOT NULL,
@@ -13,7 +15,6 @@ CREATE TABLE customers (
     city VARCHAR(50)
 );
 
--- Drivers table
 CREATE TABLE drivers (
     driver_id INT PRIMARY KEY AUTO_INCREMENT,
     driver_name VARCHAR(100) NOT NULL,
@@ -22,16 +23,14 @@ CREATE TABLE drivers (
     employment_status VARCHAR(30) DEFAULT 'Active'
 );
 
--- Vehicles table
 CREATE TABLE vehicles (
     vehicle_id INT PRIMARY KEY AUTO_INCREMENT,
     registration_number VARCHAR(30) UNIQUE NOT NULL,
     vehicle_type VARCHAR(50),
     capacity_kg DECIMAL(10,2),
-    status VARCHAR(30) DEFAULT 'Available'
+    vehicle_status VARCHAR(30) DEFAULT 'Available'
 );
 
--- Routes table
 CREATE TABLE routes (
     route_id INT PRIMARY KEY AUTO_INCREMENT,
     start_location VARCHAR(100) NOT NULL,
@@ -40,7 +39,6 @@ CREATE TABLE routes (
     estimated_time_minutes INT
 );
 
--- Deliveries table
 CREATE TABLE deliveries (
     delivery_id INT PRIMARY KEY AUTO_INCREMENT,
     customer_id INT NOT NULL,
@@ -51,8 +49,15 @@ CREATE TABLE deliveries (
     delivery_status VARCHAR(30) NOT NULL,
     delivery_cost DECIMAL(10,2),
 
-    FOREIGN KEY (customer_id) REFERENCES customers(customer_id),
-    FOREIGN KEY (driver_id) REFERENCES drivers(driver_id),
-    FOREIGN KEY (vehicle_id) REFERENCES vehicles(vehicle_id),
-    FOREIGN KEY (route_id) REFERENCES routes(route_id)
+    CONSTRAINT fk_delivery_customer
+        FOREIGN KEY (customer_id) REFERENCES customers(customer_id),
+
+    CONSTRAINT fk_delivery_driver
+        FOREIGN KEY (driver_id) REFERENCES drivers(driver_id),
+
+    CONSTRAINT fk_delivery_vehicle
+        FOREIGN KEY (vehicle_id) REFERENCES vehicles(vehicle_id),
+
+    CONSTRAINT fk_delivery_route
+        FOREIGN KEY (route_id) REFERENCES routes(route_id)
 );
