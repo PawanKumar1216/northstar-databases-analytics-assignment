@@ -1,39 +1,46 @@
-# NorthStar Urban Mobility and Logistics
-# Python Data Processing Script
-
 import pandas as pd
 
 
-def load_data(file_path):
-    """Load the sample logistics dataset."""
-    return pd.read_csv(file_path)
+def read_delivery_data(path):
+    data = pd.read_csv(path)
+    return data
 
 
-def clean_data(df):
-    """Clean and prepare the dataset for analysis."""
-    df = df.drop_duplicates()
-    df["distance_km"] = pd.to_numeric(df["distance_km"], errors="coerce")
-    df = df.dropna()
-    return df
+def clean_delivery_data(data):
+    cleaned = data.copy()
+
+    cleaned = cleaned.drop_duplicates()
+    cleaned["distance_km"] = pd.to_numeric(cleaned["distance_km"], errors="coerce")
+    cleaned = cleaned.dropna()
+
+    return cleaned
 
 
-def summarise_deliveries(df):
-    """Create a simple delivery status summary."""
-    return df.groupby("delivery_status").size().reset_index(name="total_deliveries")
+def delivery_status_summary(data):
+    summary = (
+        data.groupby("delivery_status")
+        .size()
+        .reset_index(name="total_deliveries")
+        .sort_values("total_deliveries", ascending=False)
+    )
+
+    return summary
 
 
 def main():
     file_path = "data/sample_data.csv"
 
-    df = load_data(file_path)
-    cleaned_df = clean_data(df)
-    summary = summarise_deliveries(cleaned_df)
+    deliveries = read_delivery_data(file_path)
+    cleaned_deliveries = clean_delivery_data(deliveries)
+    status_summary = delivery_status_summary(cleaned_deliveries)
 
-    print("Cleaned Dataset:")
-    print(cleaned_df)
+    print("Cleaned delivery data")
+    print(cleaned_deliveries)
 
-    print("\nDelivery Status Summary:")
-    print(summary)
+    print("\nDelivery status summary")
+    print(status_summary)
+
+    print("\nAverage distance:", round(cleaned_deliveries["distance_km"].mean(), 2), "km")
 
 
 if __name__ == "__main__":
