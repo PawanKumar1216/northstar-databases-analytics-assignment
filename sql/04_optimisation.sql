@@ -1,29 +1,24 @@
--- NorthStar Urban Mobility and Logistics
--- Query Optimisation Script
-
 USE northstar_logistics;
 
--- Index on delivery status to improve filtering of completed, delayed, and cancelled deliveries
-CREATE INDEX idx_deliveries_status
+CREATE INDEX idx_delivery_status
 ON deliveries(delivery_status);
 
--- Index on delivery date to improve date-based reporting queries
-CREATE INDEX idx_deliveries_date
+CREATE INDEX idx_delivery_date
 ON deliveries(delivery_date);
 
--- Index on customer ID to improve joins between customers and deliveries
-CREATE INDEX idx_deliveries_customer
+CREATE INDEX idx_delivery_customer
 ON deliveries(customer_id);
 
--- Index on driver ID to improve driver performance reporting
-CREATE INDEX idx_deliveries_driver
+CREATE INDEX idx_delivery_driver
 ON deliveries(driver_id);
 
--- Index on vehicle ID to improve vehicle usage reporting
-CREATE INDEX idx_deliveries_vehicle
+CREATE INDEX idx_delivery_vehicle
 ON deliveries(vehicle_id);
 
--- Example optimised query using indexed delivery_status column
+CREATE INDEX idx_delivery_route
+ON deliveries(route_id);
+
+-- Query that benefits from the delivery_status index
 SELECT
     delivery_id,
     delivery_date,
@@ -33,10 +28,10 @@ FROM deliveries
 WHERE delivery_status = 'Completed'
 ORDER BY delivery_date DESC;
 
--- Example optimised query using indexed driver_id column
+-- Query that benefits from the driver_id index
 SELECT
     driver_id,
-    COUNT(delivery_id) AS total_deliveries
+    COUNT(*) AS total_deliveries
 FROM deliveries
 GROUP BY driver_id
 ORDER BY total_deliveries DESC;
