@@ -1,6 +1,3 @@
--- NorthStar Urban Mobility and Logistics
--- Sample Data Insertion
-
 USE northstar_logistics;
 
 INSERT INTO customers (customer_name, email, phone, city) VALUES
@@ -17,7 +14,7 @@ INSERT INTO drivers (driver_name, phone, licence_number, employment_status) VALU
 ('Priya Patel', '07444444444', 'LIC1004', 'Inactive'),
 ('Daniel Brown', '07555555555', 'LIC1005', 'Active');
 
-INSERT INTO vehicles (registration_number, vehicle_type, capacity_kg, status) VALUES
+INSERT INTO vehicles (registration_number, vehicle_type, capacity_kg, vehicle_status) VALUES
 ('NSV001', 'Van', 1200.00, 'Available'),
 ('NSV002', 'Truck', 5000.00, 'In Use'),
 ('NSV003', 'Electric Van', 1000.00, 'Available'),
