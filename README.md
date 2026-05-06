@@ -2,13 +2,15 @@
 
 ## Project Overview
 
-This project is based on the NorthStar Urban Mobility and Logistics case study. It shows how delivery data can be stored, processed, queried, and analysed using SQL, Python, R, and MongoDB.
+This project is based on the NorthStar Urban Mobility and Logistics case study. The aim of the project is to design and demonstrate a small data management and analytics solution for delivery operations.
 
-The work includes a relational database, sample data, analytical SQL queries, basic query optimisation, Python data cleaning, R analytics, MongoDB queries, and screenshot evidence.
+The project uses SQL for relational database design, Python for data processing, R for basic analytics, and MongoDB for document-based data storage. It also includes sample data, optimisation queries, a report outline, and screenshot evidence.
 
 ## Repository Structure
 
 ```text
+northstar-databases-analytics-assignment/
+
 data/
   sample_data.csv
 
@@ -23,6 +25,7 @@ r/
 
 report/
   report_outline.md
+  notebooks/
 
 screenshots/
   README.md
@@ -32,3 +35,5 @@ sql/
   02_insert_data.sql
   03_queries.sql
   04_optimisation.sql
+
+README.md
