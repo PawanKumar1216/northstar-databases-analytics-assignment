@@ -1,9 +1,6 @@
--- NorthStar Urban Mobility and Logistics
--- Analytical SQL Queries
-
 USE northstar_logistics;
 
--- 1. View all deliveries with customer, driver, vehicle, and route details
+-- Full delivery report with related details
 SELECT
     d.delivery_id,
     c.customer_name,
@@ -20,22 +17,24 @@ FROM deliveries d
 JOIN customers c ON d.customer_id = c.customer_id
 JOIN drivers dr ON d.driver_id = dr.driver_id
 JOIN vehicles v ON d.vehicle_id = v.vehicle_id
-JOIN routes r ON d.route_id = r.route_id;
+JOIN routes r ON d.route_id = r.route_id
+ORDER BY d.delivery_date;
 
--- 2. Count deliveries by delivery status
+-- Number of deliveries by status
 SELECT
     delivery_status,
     COUNT(*) AS total_deliveries
 FROM deliveries
-GROUP BY delivery_status;
+GROUP BY delivery_status
+ORDER BY total_deliveries DESC;
 
--- 3. Calculate total delivery revenue
+-- Revenue from completed deliveries only
 SELECT
-    SUM(delivery_cost) AS total_revenue
+    SUM(delivery_cost) AS completed_delivery_revenue
 FROM deliveries
 WHERE delivery_status = 'Completed';
 
--- 4. Find delayed deliveries
+-- Delayed deliveries
 SELECT
     d.delivery_id,
     c.customer_name,
@@ -45,14 +44,15 @@ SELECT
 FROM deliveries d
 JOIN customers c ON d.customer_id = c.customer_id
 JOIN drivers dr ON d.driver_id = dr.driver_id
-WHERE d.delivery_status = 'Delayed';
+WHERE d.delivery_status = 'Delayed'
+ORDER BY d.delivery_date;
 
--- 5. Find average route distance
+-- Average distance across all routes
 SELECT
-    AVG(distance_km) AS average_distance_km
+    ROUND(AVG(distance_km), 2) AS average_distance_km
 FROM routes;
 
--- 6. Find the most expensive completed deliveries
+-- Completed deliveries ordered by cost
 SELECT
     delivery_id,
     delivery_date,
@@ -62,21 +62,21 @@ FROM deliveries
 WHERE delivery_status = 'Completed'
 ORDER BY delivery_cost DESC;
 
--- 7. Total deliveries handled by each driver
+-- Deliveries handled by each driver
 SELECT
     dr.driver_name,
     COUNT(d.delivery_id) AS deliveries_handled
 FROM drivers dr
 LEFT JOIN deliveries d ON dr.driver_id = d.driver_id
-GROUP BY dr.driver_name
+GROUP BY dr.driver_id, dr.driver_name
 ORDER BY deliveries_handled DESC;
 
--- 8. Vehicle usage report
+-- Vehicle usage summary
 SELECT
     v.registration_number,
     v.vehicle_type,
-    COUNT(d.delivery_id) AS usage_count
+    COUNT(d.delivery_id) AS times_used
 FROM vehicles v
 LEFT JOIN deliveries d ON v.vehicle_id = d.vehicle_id
-GROUP BY v.registration_number, v.vehicle_type
-ORDER BY usage_count DESC;
+GROUP BY v.vehicle_id, v.registration_number, v.vehicle_type
+ORDER BY times_used DESC;
