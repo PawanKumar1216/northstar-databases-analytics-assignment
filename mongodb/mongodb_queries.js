@@ -147,6 +147,52 @@ db.deliveries.insertMany([
     delivery_date: "2026-04-03",
     delivery_status: "Delivered",
     delivery_cost: 38.20
+  },
+  {
+    delivery_id: 7,
+    customer: {
+      name: "Emily Clarke",
+      city: "Bristol"
+    },
+    driver: {
+      name: "Nadia Ali",
+      status: "Active"
+    },
+    vehicle: {
+      registration_number: "NS02 VAN",
+      type: "Van"
+    },
+    route: {
+      start_location: "Warehouse A",
+      end_location: "Bristol Centre",
+      distance_km: 32.1
+    },
+    delivery_date: "2026-04-04",
+    delivery_status: "Cancelled",
+    delivery_cost: 0.00
+  },
+  {
+    delivery_id: 8,
+    customer: {
+      name: "Omar Hussain",
+      city: "Sheffield"
+    },
+    driver: {
+      name: "Fatima Begum",
+      status: "Active"
+    },
+    vehicle: {
+      registration_number: "NS03 BIKE",
+      type: "Motorbike"
+    },
+    route: {
+      start_location: "Warehouse B",
+      end_location: "Sheffield West",
+      distance_km: 20.6
+    },
+    delivery_date: "2026-04-04",
+    delivery_status: "Delivered",
+    delivery_cost: 21.60
   }
 ]);
 
@@ -173,13 +219,21 @@ db.deliveries.find({
 });
 
 
-// 7. Sort deliveries by highest delivery cost
+// 7. Find deliveries costing more than £25
+db.deliveries.find({
+  delivery_cost: {
+    $gt: 25
+  }
+});
+
+
+// 8. Sort deliveries by highest delivery cost
 db.deliveries.find().sort({
   delivery_cost: -1
 });
 
 
-// 8. Count deliveries by delivery status
+// 9. Count deliveries by delivery status
 db.deliveries.aggregate([
   {
     $group: {
@@ -197,7 +251,7 @@ db.deliveries.aggregate([
 ]);
 
 
-// 9. Calculate average delivery cost by city
+// 10. Calculate average delivery cost by city
 db.deliveries.aggregate([
   {
     $group: {
@@ -218,7 +272,7 @@ db.deliveries.aggregate([
 ]);
 
 
-// 10. Calculate total delivery cost by vehicle type
+// 11. Calculate total delivery cost by vehicle type
 db.deliveries.aggregate([
   {
     $group: {
@@ -239,7 +293,28 @@ db.deliveries.aggregate([
 ]);
 
 
-// 11. Create indexes for query optimisation
+// 12. Calculate average route distance by delivery status
+db.deliveries.aggregate([
+  {
+    $group: {
+      _id: "$delivery_status",
+      average_distance_km: {
+        $avg: "$route.distance_km"
+      },
+      total_deliveries: {
+        $sum: 1
+      }
+    }
+  },
+  {
+    $sort: {
+      total_deliveries: -1
+    }
+  }
+]);
+
+
+// 13. Create indexes for query optimisation
 db.deliveries.createIndex({
   delivery_status: 1
 });
@@ -256,8 +331,12 @@ db.deliveries.createIndex({
   "driver.name": 1
 });
 
+db.deliveries.createIndex({
+  "vehicle.type": 1
+});
 
-// 12. Check query performance using explain
+
+// 14. Check query performance using explain
 db.deliveries.find({
   delivery_status: "Delivered"
 }).explain("executionStats");
