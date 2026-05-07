@@ -45,21 +45,23 @@ README.md
 
 The sample dataset is stored in:
 
-```text
-data/sample_data.csv
-```
+    data/sample_data.csv
 
-The dataset contains delivery records for a small logistics scenario. Each row represents one delivery trip.
+The dataset contains delivery records for a small logistics scenario. Each row represents one delivery record.
 
 The dataset includes the following fields:
 
-- `trip_id`
-- `vehicle_id`
-- `driver_id`
-- `start_location`
-- `end_location`
-- `distance_km`
-- `delivery_status`
+  * `delivery_id`
+  * `customer_id`
+  * `driver_id`
+  * `vehicle_id`
+  * `route_id`
+  * `delivery_date`
+  * `delivery_zone`
+  * `delivery_status`
+  * `delivery_time_minutes`
+  * `delivery_cost`
+  * `distance_km`
 
 The dataset is small, but it is useful for demonstrating database design, querying, data processing, and basic analytics.
 
@@ -163,17 +165,15 @@ The script uses pandas to read and process the CSV file.
 
 The Python script performs the following tasks:
 
-- reads the delivery dataset
-- removes duplicate records
-- converts `distance_km` into numeric format
-- removes missing or invalid records
-- trims extra spaces from text columns
-- creates a delivery status summary
-- creates a vehicle usage summary
-- creates a driver summary
-- identifies the longest delivery
-- calculates total and average delivery distance
-- saves processed output files
+  - reads the delivery dataset
+  - removes duplicate records
+  - converts date and numeric fields into the correct format
+  - removes missing or invalid records
+  - calculates total deliveries
+  - calculates average delivery time
+  - calculates average delivery cost
+  - creates a delivery status summary
+  - creates a delivery zone summary
 
 Run the Python script from the main project folder:
 
@@ -195,13 +195,14 @@ The R script performs basic analytics on the CSV dataset.
 
 It includes:
 
-- reading the CSV file
-- displaying the dataset structure
-- showing summary statistics
-- counting deliveries by status
-- calculating average delivery distance
-- identifying the longest route
-- creating a bar chart of delivery statuses
+  - reading the CSV file
+  - cleaning and preparing the dataset
+  - calculating total deliveries
+  - calculating average delivery time
+  - calculating average delivery cost
+  - counting deliveries by status
+  - counting deliveries by zone
+  - creating basic visualisations for delivery performance
 
 Run the R script from the main project folder:
 
