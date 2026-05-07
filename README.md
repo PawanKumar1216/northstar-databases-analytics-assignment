@@ -10,36 +10,38 @@ The main focus is to show how logistics data can be stored, processed, queried, 
 
 ## Repository Structure
 
-```text
-northstar-databases-analytics-assignment/
+    northstar-databases-analytics-assignment/
 
-data/
-  sample_data.csv
+    data/
+      sample_data.csv
 
-mongodb/
-  mongodb_queries.js
+    mongodb/
+      mongodb_queries.js
 
-python/
-  data_processing.py
+    python/
+      data_processing.py
 
-r/
-  analytics.R
+    r/
+      analytics.R
 
-report/
-  report_outline.md
-  notebooks/
+    report/
+      report_outline.md
 
-screenshots/
-  README.md
+    screenshots/
+      github_repository_structure.png
+      mongodb_queries.png
+      python_output.png
+      r_analytics_output.png
+      sql_query_results.png
+      sql_tables_created.png
 
-sql/
-  01_schema.sql
-  02_insert_data.sql
-  03_queries.sql
-  04_optimisation.sql
+    sql/
+      01_schema.sql
+      02_insert_data.sql
+      03_queries.sql
+      04_optimisation.sql
 
-README.md
-```
+    README.md
 
 ## Dataset
 
@@ -51,17 +53,17 @@ The dataset contains delivery records for a small logistics scenario. Each row r
 
 The dataset includes the following fields:
 
-  * `delivery_id`
-  * `customer_id`
-  * `driver_id`
-  * `vehicle_id`
-  * `route_id`
-  * `delivery_date`
-  * `delivery_zone`
-  * `delivery_status`
-  * `delivery_time_minutes`
-  * `delivery_cost`
-  * `distance_km`
+- `delivery_id`
+- `customer_id`
+- `driver_id`
+- `vehicle_id`
+- `route_id`
+- `delivery_date`
+- `delivery_zone`
+- `delivery_status`
+- `delivery_time_minutes`
+- `delivery_cost`
+- `distance_km`
 
 The dataset is small, but it is useful for demonstrating database design, querying, data processing, and basic analytics.
 
@@ -85,12 +87,10 @@ This design helps reduce repeated data. For example, driver information is store
 
 The SQL folder contains four files:
 
-```text
-sql/01_schema.sql
-sql/02_insert_data.sql
-sql/03_queries.sql
-sql/04_optimisation.sql
-```
+    sql/01_schema.sql
+    sql/02_insert_data.sql
+    sql/03_queries.sql
+    sql/04_optimisation.sql
 
 ### 01_schema.sql
 
@@ -112,12 +112,10 @@ This file creates indexes on important columns. These indexes can improve query 
 
 Run the SQL files in the following order:
 
-```text
-1. sql/01_schema.sql
-2. sql/02_insert_data.sql
-3. sql/03_queries.sql
-4. sql/04_optimisation.sql
-```
+    1. sql/01_schema.sql
+    2. sql/02_insert_data.sql
+    3. sql/03_queries.sql
+    4. sql/04_optimisation.sql
 
 The schema file should be run first because it creates the database structure. The insert file should be run second because it adds the sample records. The query and optimisation files can then be tested.
 
@@ -149,7 +147,7 @@ Indexes are created on:
 - `vehicle_id`
 - `route_id`
 
-For example, an index on `delivery_status` can help when searching for completed, delayed, or cancelled deliveries.
+For example, an index on `delivery_status` can help when searching for delivered, delayed, in-transit, or cancelled deliveries.
 
 Indexes on foreign key columns can also support joins between the `deliveries` table and the related tables.
 
@@ -157,89 +155,81 @@ Indexes on foreign key columns can also support joins between the `deliveries` t
 
 The Python script is stored in:
 
-```text
-python/data_processing.py
-```
+    python/data_processing.py
 
 The script uses pandas to read and process the CSV file.
 
 The Python script performs the following tasks:
 
-  - reads the delivery dataset
-  - removes duplicate records
-  - converts date and numeric fields into the correct format
-  - removes missing or invalid records
-  - calculates total deliveries
-  - calculates average delivery time
-  - calculates average delivery cost
-  - creates a delivery status summary
-  - creates a delivery zone summary
+- reads the delivery dataset
+- removes duplicate records
+- converts date and numeric fields into the correct format
+- removes missing or invalid records
+- calculates total deliveries
+- calculates average delivery time
+- calculates average delivery cost
+- creates a delivery status summary
+- creates a delivery zone summary
 
 Run the Python script from the main project folder:
 
-```bash
-python python/data_processing.py
-```
+    python python/data_processing.py
 
-The output shows the cleaned data, status summary, vehicle summary, driver summary, longest delivery, total distance, and average distance.
+The output shows total deliveries, average delivery time, average delivery cost, deliveries by status, and deliveries by zone.
 
 ## R Analytics
 
 The R script is stored in:
 
-```text
-r/analytics.R
-```
+    r/analytics.R
 
 The R script performs basic analytics on the CSV dataset.
 
 It includes:
 
-  - reading the CSV file
-  - cleaning and preparing the dataset
-  - calculating total deliveries
-  - calculating average delivery time
-  - calculating average delivery cost
-  - counting deliveries by status
-  - counting deliveries by zone
-  - creating basic visualisations for delivery performance
+- reading the CSV file
+- cleaning and preparing the dataset
+- calculating total deliveries
+- calculating average delivery time
+- calculating average delivery cost
+- counting deliveries by status
+- counting deliveries by zone
+- creating basic visualisations for delivery performance
 
 Run the R script from the main project folder:
 
-```r
-source("r/analytics.R")
-```
+    source("r/analytics.R")
 
 ## MongoDB Work
 
 The MongoDB script is stored in:
 
-```text
-mongodb/mongodb_queries.js
-```
+    mongodb/mongodb_queries.js
 
 MongoDB is used to show how delivery records can also be stored as documents instead of relational tables.
 
 The MongoDB script includes:
 
-- using the logistics database
-- inserting delivery documents
+- selecting the logistics database
+- inserting embedded delivery documents
 - viewing all delivery documents
-- filtering completed deliveries
-- finding deliveries above a selected distance
-- grouping deliveries by status
-- sorting deliveries by distance
-- creating an index on delivery status
+- filtering delivered and delayed deliveries
+- finding deliveries for selected customer cities
+- finding deliveries above a selected delivery cost
+- sorting deliveries by delivery cost
+- grouping deliveries by delivery status
+- calculating average delivery cost by city
+- calculating delivery cost by vehicle type
+- creating indexes for query optimisation
+- checking query performance using explain
 
-This section demonstrates a document-based approach to storing logistics data.
+This section demonstrates a document-based approach to storing logistics data using embedded customer, driver, vehicle, and route information.
 
 ## Report
 
 The report is stored in:
 
-```text
-report/report_outline.md
-```
+    report/report_outline.md
 
 The report explains the project background, database design, SQL implementation, query optimisation, Python processing, R analytics, MongoDB implementation, testing evidence, and conclusion.
 
@@ -247,16 +237,14 @@ The report explains the project background, database design, SQL implementation,
 
 The screenshots folder is used to store evidence that the project was tested.
 
-Suggested screenshots include:
+The screenshots include:
 
 - GitHub repository structure
-- SQL database tables
-- SQL inserted data
-- SQL query results
+- MongoDB queries
 - Python script output
-- R script output or chart
-- MongoDB inserted documents
-- MongoDB query results
+- R analytics output
+- SQL query results
+- SQL tables created
 
 Screenshots are important because they show that the project files were tested successfully.
 
@@ -287,7 +275,7 @@ This project demonstrates:
 
 ## Limitations
 
-The dataset used in this project is small and only contains sample records. In a real logistics company, the dataset would be much larger and would include more details such as parcel weight, delivery time, customer address, fuel usage, live vehicle location, and driver performance.
+The dataset used in this project is small and only contains sample records. In a real logistics company, the dataset would be much larger and would include more details such as parcel weight, customer address, fuel usage, live vehicle location, and driver performance.
 
 The optimisation section is also basic because performance improvements are harder to measure on a small dataset. However, the indexes show which columns would be important in a larger database.
 
