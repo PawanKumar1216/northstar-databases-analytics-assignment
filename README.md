@@ -53,17 +53,18 @@ The dataset contains delivery records for a small logistics scenario. Each row r
 
 The dataset includes the following fields:
 
-- `delivery_id`
-- `customer_id`
-- `driver_id`
-- `vehicle_id`
-- `route_id`
-- `delivery_date`
-- `delivery_zone`
-- `delivery_status`
-- `delivery_time_minutes`
-- `delivery_cost`
-- `distance_km`
+data/sample_data.csv
+delivery_id
+customer_id
+driver_id
+vehicle_id
+route_id
+delivery_date
+delivery_zone
+delivery_status
+delivery_time_minutes
+delivery_cost
+distance_km
 
 The dataset is small, but it is useful for demonstrating database design, querying, data processing, and basic analytics.
 
