@@ -7,7 +7,7 @@ library(ggplot2)
 
 
 # Load dataset
-deliveries <- read_csv("data/deliveries.csv")
+deliveries <- read_csv("data/sample_data.csv")
 
 
 # Clean and prepare dataset
