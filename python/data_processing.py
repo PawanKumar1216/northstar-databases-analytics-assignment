@@ -5,7 +5,7 @@ def load_data():
     """
     Load sample delivery operations data from the CSV file.
     """
-    deliveries = pd.read_csv("data/deliveries.csv")
+    deliveries = pd.read_csv("data/sample_data.csv")
     return deliveries
 
 
