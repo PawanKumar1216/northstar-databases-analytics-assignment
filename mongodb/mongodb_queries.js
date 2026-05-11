@@ -1,342 +1,190 @@
 // NorthStar Urban Mobility and Logistics
-// MongoDB queries for document-based delivery data
+// MongoDB query examples
 
-db = db.getSiblingDB("northstar_logistics");
+use("northstar_logistics");
 
+// --------------------------------------------------
+// 1. Count documents in the main collections
+// --------------------------------------------------
 
-// 1. Remove existing records to avoid duplicate data during testing
-db.deliveries.deleteMany({});
+db.deliveries.countDocuments({});
+db.drivers.countDocuments({});
+db.vehicles.countDocuments({});
+db.hubs.countDocuments({});
+db.customers.countDocuments({});
 
+// --------------------------------------------------
+// 2. Retrieve sample delayed deliveries
+// --------------------------------------------------
 
-// 2. Insert sample delivery documents
-db.deliveries.insertMany([
+db.deliveries.find(
+  { delivery_status: "Delayed" },
   {
+    _id: 0,
     delivery_id: 1,
-    customer: {
-      name: "Aisha Khan",
-      city: "London"
-    },
-    driver: {
-      name: "Raj Singh",
-      status: "Active"
-    },
-    vehicle: {
-      registration_number: "NS01 VAN",
-      type: "Van"
-    },
-    route: {
-      start_location: "Warehouse A",
-      end_location: "London Central",
-      distance_km: 12.5
-    },
-    delivery_date: "2026-04-01",
-    delivery_status: "Delivered",
-    delivery_cost: 18.50
-  },
-  {
-    delivery_id: 2,
-    customer: {
-      name: "James Wilson",
-      city: "Manchester"
-    },
-    driver: {
-      name: "Tom Evans",
-      status: "Active"
-    },
-    vehicle: {
-      registration_number: "NS02 VAN",
-      type: "Van"
-    },
-    route: {
-      start_location: "Warehouse B",
-      end_location: "Manchester Central",
-      distance_km: 15.0
-    },
-    delivery_date: "2026-04-01",
-    delivery_status: "Delivered",
-    delivery_cost: 22.00
-  },
-  {
-    delivery_id: 3,
-    customer: {
-      name: "Priya Patel",
-      city: "Birmingham"
-    },
-    driver: {
-      name: "Nadia Ali",
-      status: "Active"
-    },
-    vehicle: {
-      registration_number: "NS05 EV",
-      type: "Electric Van"
-    },
-    route: {
-      start_location: "Warehouse B",
-      end_location: "Birmingham North",
-      distance_km: 22.7
-    },
-    delivery_date: "2026-04-02",
-    delivery_status: "Delayed",
-    delivery_cost: 31.75
-  },
-  {
-    delivery_id: 4,
-    customer: {
-      name: "Daniel Brown",
-      city: "Leeds"
-    },
-    driver: {
-      name: "Raj Singh",
-      status: "Active"
-    },
-    vehicle: {
-      registration_number: "NS01 VAN",
-      type: "Van"
-    },
-    route: {
-      start_location: "Warehouse C",
-      end_location: "Leeds City Centre",
-      distance_km: 10.8
-    },
-    delivery_date: "2026-04-02",
-    delivery_status: "Delivered",
-    delivery_cost: 16.40
-  },
-  {
-    delivery_id: 5,
-    customer: {
-      name: "Sofia Ahmed",
-      city: "London"
-    },
-    driver: {
-      name: "Fatima Begum",
-      status: "Active"
-    },
-    vehicle: {
-      registration_number: "NS05 EV",
-      type: "Electric Van"
-    },
-    route: {
-      start_location: "Warehouse A",
-      end_location: "London East",
-      distance_km: 18.2
-    },
-    delivery_date: "2026-04-03",
-    delivery_status: "In Transit",
-    delivery_cost: 24.90
-  },
-  {
-    delivery_id: 6,
-    customer: {
-      name: "Michael Green",
-      city: "Liverpool"
-    },
-    driver: {
-      name: "Tom Evans",
-      status: "Active"
-    },
-    vehicle: {
-      registration_number: "NS04 TRUCK",
-      type: "Truck"
-    },
-    route: {
-      start_location: "Warehouse C",
-      end_location: "Liverpool South",
-      distance_km: 28.4
-    },
-    delivery_date: "2026-04-03",
-    delivery_status: "Delivered",
-    delivery_cost: 38.20
-  },
-  {
-    delivery_id: 7,
-    customer: {
-      name: "Emily Clarke",
-      city: "Bristol"
-    },
-    driver: {
-      name: "Nadia Ali",
-      status: "Active"
-    },
-    vehicle: {
-      registration_number: "NS02 VAN",
-      type: "Van"
-    },
-    route: {
-      start_location: "Warehouse A",
-      end_location: "Bristol Centre",
-      distance_km: 32.1
-    },
-    delivery_date: "2026-04-04",
-    delivery_status: "Cancelled",
-    delivery_cost: 0.00
-  },
-  {
-    delivery_id: 8,
-    customer: {
-      name: "Omar Hussain",
-      city: "Sheffield"
-    },
-    driver: {
-      name: "Fatima Begum",
-      status: "Active"
-    },
-    vehicle: {
-      registration_number: "NS03 BIKE",
-      type: "Motorbike"
-    },
-    route: {
-      start_location: "Warehouse B",
-      end_location: "Sheffield West",
-      distance_km: 20.6
-    },
-    delivery_date: "2026-04-04",
-    delivery_status: "Delivered",
-    delivery_cost: 21.60
+    hub_id: 1,
+    driver_id: 1,
+    route_distance_km: 1
   }
-]);
+).limit(5);
 
+// --------------------------------------------------
+// 3. Count deliveries by status
+// --------------------------------------------------
 
-// 3. Show all delivery documents
-db.deliveries.find();
-
-
-// 4. Find all delivered orders
-db.deliveries.find({
-  delivery_status: "Delivered"
-});
-
-
-// 5. Find delayed deliveries
-db.deliveries.find({
-  delivery_status: "Delayed"
-});
-
-
-// 6. Find deliveries for London customers
-db.deliveries.find({
-  "customer.city": "London"
-});
-
-
-// 7. Find deliveries costing more than £25
-db.deliveries.find({
-  delivery_cost: {
-    $gt: 25
-  }
-});
-
-
-// 8. Sort deliveries by highest delivery cost
-db.deliveries.find().sort({
-  delivery_cost: -1
-});
-
-
-// 9. Count deliveries by delivery status
 db.deliveries.aggregate([
   {
     $group: {
       _id: "$delivery_status",
-      total_deliveries: {
-        $sum: 1
-      }
+      total_deliveries: { $sum: 1 }
     }
   },
   {
-    $sort: {
-      total_deliveries: -1
-    }
+    $sort: { total_deliveries: -1 }
   }
 ]);
 
+// --------------------------------------------------
+// 4. Find deliveries with missing proof of completion
+// --------------------------------------------------
 
-// 10. Calculate average delivery cost by city
+db.deliveries.find(
+  { proof_of_completion_missing: 1 },
+  {
+    _id: 0,
+    delivery_id: 1,
+    delivery_status: 1,
+    hub_id: 1,
+    proof_of_completion_missing: 1
+  }
+).limit(5);
+
+// --------------------------------------------------
+// 5. Identify high manual route override cases
+// --------------------------------------------------
+
+db.deliveries.find(
+  { manual_route_override_count: { $gte: 3 } },
+  {
+    _id: 0,
+    delivery_id: 1,
+    hub_id: 1,
+    delivery_status: 1,
+    manual_route_override_count: 1,
+    customer_rating_post_delivery: 1
+  }
+).sort({ manual_route_override_count: -1 }).limit(5);
+
+// --------------------------------------------------
+// 6. Summarise hub performance
+// --------------------------------------------------
+
 db.deliveries.aggregate([
   {
     $group: {
-      _id: "$customer.city",
-      average_delivery_cost: {
-        $avg: "$delivery_cost"
+      _id: "$hub_id",
+      total_deliveries: { $sum: 1 },
+      delayed_deliveries: {
+        $sum: {
+          $cond: [{ $eq: ["$delivery_status", "Delayed"] }, 1, 0]
+        }
       },
-      total_deliveries: {
-        $sum: 1
-      }
+      failed_deliveries: {
+        $sum: {
+          $cond: [{ $eq: ["$delivery_status", "Failed"] }, 1, 0]
+        }
+      },
+      average_rating: { $avg: "$customer_rating_post_delivery" }
     }
   },
   {
-    $sort: {
-      average_delivery_cost: -1
-    }
+    $sort: { delayed_deliveries: -1 }
   }
 ]);
 
+// --------------------------------------------------
+// 7. Compare performance by delivery status
+// --------------------------------------------------
 
-// 11. Calculate total delivery cost by vehicle type
-db.deliveries.aggregate([
-  {
-    $group: {
-      _id: "$vehicle.type",
-      total_delivery_cost: {
-        $sum: "$delivery_cost"
-      },
-      total_deliveries: {
-        $sum: 1
-      }
-    }
-  },
-  {
-    $sort: {
-      total_delivery_cost: -1
-    }
-  }
-]);
-
-
-// 12. Calculate average route distance by delivery status
 db.deliveries.aggregate([
   {
     $group: {
       _id: "$delivery_status",
-      average_distance_km: {
-        $avg: "$route.distance_km"
-      },
-      total_deliveries: {
-        $sum: 1
-      }
+      total_deliveries: { $sum: 1 },
+      average_customer_rating: { $avg: "$customer_rating_post_delivery" },
+      average_route_distance_km: { $avg: "$route_distance_km" },
+      average_fuel_or_charge_cost: { $avg: "$fuel_or_charge_cost" }
     }
   },
   {
-    $sort: {
-      total_deliveries: -1
-    }
+    $sort: { average_customer_rating: -1 }
   }
 ]);
 
+// --------------------------------------------------
+// 8. Enrich delivery records with driver and vehicle details
+// --------------------------------------------------
 
-// 13. Create indexes for query optimisation
-db.deliveries.createIndex({
-  delivery_status: 1
-});
+db.deliveries.aggregate([
+  {
+    $lookup: {
+      from: "drivers",
+      localField: "driver_id",
+      foreignField: "driver_id",
+      as: "driver_details"
+    }
+  },
+  {
+    $lookup: {
+      from: "vehicles",
+      localField: "vehicle_id",
+      foreignField: "vehicle_id",
+      as: "vehicle_details"
+    }
+  },
+  {
+    $unwind: "$driver_details"
+  },
+  {
+    $unwind: "$vehicle_details"
+  },
+  {
+    $project: {
+      _id: 0,
+      delivery_id: 1,
+      delivery_status: 1,
+      driver_id: 1,
+      driver_rating: "$driver_details.driver_rating",
+      years_experience: "$driver_details.years_experience",
+      vehicle_id: 1,
+      vehicle_type: "$vehicle_details.vehicle_type",
+      maintenance_status: "$vehicle_details.maintenance_status"
+    }
+  },
+  {
+    $limit: 5
+  }
+]);
 
-db.deliveries.createIndex({
-  delivery_date: 1
-});
+// --------------------------------------------------
+// 9. Create indexes for query optimisation
+// --------------------------------------------------
 
-db.deliveries.createIndex({
-  "customer.city": 1
-});
+db.deliveries.createIndex(
+  { delivery_status: 1 },
+  { name: "idx_delivery_status" }
+);
 
-db.deliveries.createIndex({
-  "driver.name": 1
-});
+db.deliveries.createIndex(
+  {
+    delivery_status: 1,
+    manual_route_override_count: 1
+  },
+  { name: "idx_status_override_count" }
+);
 
-db.deliveries.createIndex({
-  "vehicle.type": 1
-});
+// --------------------------------------------------
+// 10. Review indexes after optimisation
+// --------------------------------------------------
 
-
-// 14. Check query performance using explain
-db.deliveries.find({
-  delivery_status: "Delivered"
-}).explain("executionStats");
+db.deliveries.getIndexes();
