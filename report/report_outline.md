@@ -1,155 +1,181 @@
-# NorthStar Urban Mobility and Logistics Report
+# NorthStar Databases and Analytics Assignment Report Outline
 
 ## 1. Introduction
 
-This report explains the database and analytics work completed for the NorthStar Urban Mobility and Logistics case study. The aim of the project is to design and implement a small logistics data solution that demonstrates relational database design, SQL querying, query optimisation, Python data processing, R analytics, and MongoDB document-based querying.
+This project is based on the **NorthStar Urban Mobility and Logistics** case study. The aim is to design and demonstrate a practical database and analytics solution using SQL, Python, R, and MongoDB.
 
-The project uses a sample logistics dataset containing delivery trips, vehicles, drivers, route locations, delivery distances, and delivery statuses. The work is organised into separate folders for SQL, Python, R, MongoDB, data, screenshots, and report documentation.
+The project focuses on operational logistics data, including deliveries, drivers, vehicles, hubs, customers, orders, incidents, complaints, and app events. The work demonstrates how relational and NoSQL databases can be used alongside analytics tools to support business decision-making, monitor performance, identify inefficiencies, and improve query execution.
 
-## 2. Project Objectives
+---
 
-The main objectives of this project are:
+## 2. Learning Outcomes Covered
 
-- To design a relational database for a logistics business scenario.
-- To create tables with appropriate primary keys and foreign keys.
-- To insert realistic sample data into the database.
-- To write SQL queries for business analysis.
-- To demonstrate query optimisation using indexes.
-- To process and clean logistics data using Python.
-- To perform basic analytics and visualisation using R.
-- To demonstrate document-based storage and querying using MongoDB.
-- To present the work clearly using GitHub documentation and evidence screenshots.
+The project addresses the required learning outcomes by demonstrating the ability to:
 
-## 3. Relational Database Design
+1. Apply SQL in R analytics for writing efficient database queries  
+2. Build NoSQL databases using Python within MongoDB  
+3. Implement indexing and query optimisation strategies using Python within MongoDB  
+4. Develop big data analytics applications using Python and R within MongoDB  
 
-The relational database is designed around the core entities in a logistics operation. These entities include customers, drivers, vehicles, routes, and deliveries.
+---
 
-The database contains the following tables:
+## 3. Dataset Overview
 
-- `customers`
-- `drivers`
-- `vehicles`
-- `routes`
-- `deliveries`
+The project uses a multi-file operational dataset stored in the `data/` folder.
 
-The `deliveries` table acts as the central transactional table. It links customers, drivers, vehicles, and routes together using foreign keys. This design avoids unnecessary duplication and supports reliable analysis of delivery activity.
+### Main datasets
 
-Primary keys are used to uniquely identify each record in the main tables. Foreign keys are used in the `deliveries` table to maintain relationships between deliveries and related business entities.
+| Dataset | Purpose |
+|---|---|
+| `deliveries.csv` | Delivery status, dispatch time, completion time, route distance, overrides, ratings, and cost |
+| `drivers.csv` | Driver ratings, experience, training score, and employment type |
+| `vehicles.csv` | Vehicle type, maintenance status, battery health, and telematics details |
+| `hubs.csv` | Hub names, zones, types, and capacity scores |
+| `customers.csv` | Customer type, loyalty, engagement, preferred channel, and account status |
+| `orders.csv` | Order-level information linked to customers |
+| `complaints.csv` | Customer complaint records |
+| `incidents.csv` | Operational incident records |
+| `app_events.csv` | Application event data suitable for NoSQL modelling |
+| `data_dictionary.csv` | Field descriptions and dataset definitions |
 
-## 4. SQL Implementation
+The dataset contains realistic data quality issues such as inconsistent zone names and missing values, allowing cleaning, validation, and transformation work to be demonstrated.
 
-The SQL implementation is divided into four separate files:
+---
 
-- `sql/01_schema.sql`
-- `sql/02_insert_data.sql`
-- `sql/03_queries.sql`
-- `sql/04_optimisation.sql`
+## 4. SQL Database Design and Analysis
 
-The schema file creates the database and tables. The insert file adds sample data for customers, drivers, vehicles, routes, and deliveries. The queries file contains analytical SQL queries that extract useful business information from the database.
+The SQL element of the project demonstrates relational database design using tables, keys, and analytical queries.
 
-The SQL queries include:
+### SQL files used
 
-- Viewing full delivery details using joins.
-- Counting deliveries by status.
-- Calculating total completed delivery revenue.
-- Finding delayed deliveries.
-- Calculating average route distance.
-- Sorting completed deliveries by cost.
-- Reporting deliveries handled by each driver.
-- Reporting vehicle usage.
+- `01_schema.sql`
+- `02_insert_data.sql`
+- `03_queries.sql`
+- `04_optimisation.sql`
 
-These queries demonstrate key SQL skills including joins, filtering, aggregation, grouping, ordering, and reporting.
+### Main SQL features demonstrated
 
-## 5. Query Optimisation
+- Table creation  
+- Primary keys and foreign keys  
+- Relational joins  
+- Aggregation and grouping  
+- Filtering and ordering  
+- Index creation for optimisation  
 
-Query optimisation is demonstrated using indexes on frequently queried columns in the `deliveries` table.
+The SQL queries support operational analysis such as delivery counts, delayed deliveries, revenue analysis, vehicle usage, and driver activity.
 
-Indexes are created on:
+---
 
-- `delivery_status`
-- `delivery_date`
-- `customer_id`
-- `driver_id`
-- `vehicle_id`
+## 5. R Analytics
 
-These indexes can improve performance when filtering records, sorting delivery data, and joining the deliveries table with related tables. For example, an index on `delivery_status` helps queries that filter completed, delayed, or cancelled deliveries. Indexes on foreign key columns help improve join performance.
+R is used to conduct analytical reporting and visualisation.
 
-The optimisation file also includes example queries that benefit from these indexes.
+### R work included
 
-## 6. Python Data Processing
+- SQL analysis through R  
+- Descriptive statistics  
+- Delivery-status summaries  
+- Hub-level performance analysis  
+- Customer-rating analysis  
+- Operational visualisations  
 
-The Python component is stored in:
+The notebooks `04_SQL_Analysis_in_R.ipynb` and `05_R_Analytics_and_Visualisation.ipynb` provide evidence of the R-based workflow.
 
-- `python/data_processing.py`
+---
 
-The Python script uses the pandas library to load the sample CSV dataset from:
+## 6. Python Data Processing and Analysis
 
-- `data/sample_data.csv`
+Python is used for data preparation and operational analysis.
 
-The script performs basic data processing tasks including:
+### Python tasks demonstrated
 
-- Loading the dataset.
-- Removing duplicate records.
-- Converting the `distance_km` column into numeric format.
-- Removing invalid or missing rows.
-- Creating a summary of deliveries by delivery status.
+- Loading multiple CSV datasets  
+- Inspecting structure and missing values  
+- Standardising inconsistent categorical fields  
+- Validating data quality  
+- Creating derived fields  
+- Analysing delivery performance  
+- Identifying inefficient deliveries  
 
-This demonstrates how Python can be used to clean and prepare logistics data before further analysis.
+The notebook `06_Python_Data_Processing_and_Analysis.ipynb` provides the main Python evidence, supported by the standalone script `python/data_processing.py`.
 
-## 7. R Analytics
+---
 
-The R analytics component is stored in:
+## 7. MongoDB Atlas Development
 
-- `r/analytics.R`
+MongoDB Atlas is used to demonstrate NoSQL database development for logistics data.
 
-The R script loads the sample CSV dataset and performs basic analytics, including:
+### MongoDB work included
 
-- Displaying the structure of the dataset.
-- Producing summary statistics.
-- Counting deliveries by status.
-- Calculating the average delivery distance.
-- Identifying the longest delivery route.
-- Creating a basic bar chart of delivery statuses.
+- Secure connection from Python to MongoDB Atlas  
+- Conversion of DataFrames into MongoDB-compatible documents  
+- Creation of collections for deliveries, drivers, vehicles, hubs, and customers  
+- Insertion and retrieval of documents  
+- Standard document queries  
+- Aggregation pipelines  
+- `$lookup` for cross-collection enrichment  
+- Nested document structure examples  
 
-This demonstrates how R can be used for statistical analysis and basic visualisation of logistics data.
+The notebook `07_MongoDB_Atlas_Development.ipynb` provides the main evidence for NoSQL database development.
 
-## 8. MongoDB Implementation
+---
 
-The MongoDB component is stored in:
+## 8. Query Optimisation
 
-- `mongodb/mongodb_queries.js`
+MongoDB query optimisation is demonstrated using indexing and execution-plan analysis.
 
-The MongoDB script demonstrates document-based storage for delivery data. It inserts sample delivery documents into a MongoDB collection and performs common NoSQL queries.
+### Optimisation techniques applied
 
-The MongoDB operations include:
+- Baseline query analysis using `explain()`  
+- Single-field index on `delivery_status`  
+- Compound index on `delivery_status` and `manual_route_override_count`  
+- Before-and-after query comparison  
 
-- Inserting multiple delivery documents.
-- Viewing all documents.
-- Filtering completed deliveries.
-- Finding deliveries longer than 15 kilometres.
-- Aggregating deliveries by status.
-- Sorting deliveries by distance.
-- Creating an index on delivery status.
+### Main results
 
-This shows how logistics records can also be represented in a flexible document-based database model.
+| Query | Before Optimisation | After Optimisation |
+|---|---|---|
+| Delayed-delivery filter | `COLLSCAN`, 950 documents examined | `IXSCAN`, 202 documents examined |
+| Delayed delivery + high override filter | 202 documents examined | 23 documents examined |
 
-## 9. Evidence and Testing
+The notebook `08_Query_Optimisation_Strategies.ipynb` demonstrates how indexing reduces unnecessary scanning and improves operational query efficiency.
 
-The project includes a `screenshots` folder for evidence. Screenshots should be used to prove that each part of the project was tested successfully.
+---
 
-Recommended screenshots include:
+## 9. Key Findings
 
-- SQL tables created successfully.
-- SQL query results.
-- Python script output.
-- R script output or chart.
-- MongoDB query results.
-- GitHub repository structure.
+The analysis produced several meaningful findings:
 
-Testing evidence is important because it shows that the code was not only written but also executed and checked.
+- 616 deliveries were completed on time  
+- 202 deliveries were delayed  
+- 132 deliveries failed  
+- Hub H04 recorded the highest number of delayed deliveries  
+- Hub H08 recorded the highest number of failed deliveries  
+- On-time deliveries received much higher average customer ratings than delayed and failed deliveries  
+- Missing proof-of-completion records and high manual route override cases can be identified through MongoDB queries  
+- Indexing significantly improved retrieval efficiency for frequently used delivery queries  
 
-## 10. Conclusion
+---
 
-This project demonstrates a complete small-scale database and analytics solution for a logistics scenario. It includes relational database design, SQL implementation, query optimisation, Python data processing, R analytics, MongoDB document-based querying, and GitHub documentation.
+## 10. Repository Evidence
 
-The work shows how different database and analytics technologies can be used together to store, process, analyse, and present logistics data. The structure of the repository also makes the project easy to review, test, and understand.
+The repository includes:
+
+- SQL scripts  
+- Python processing script  
+- R analytics script  
+- MongoDB query file  
+- Six analytical notebooks  
+- Dataset files  
+- Screenshot evidence  
+- README documentation  
+
+The screenshots folder contains visual proof of SQL execution, Python output, R analytics, MongoDB queries, and the completed GitHub structure.
+
+---
+
+## 11. Conclusion
+
+This project demonstrates a complete database and analytics workflow for the NorthStar Urban Mobility and Logistics case study. It combines relational modelling, SQL querying, Python processing, R analytics, MongoDB Atlas development, and query optimisation within one structured solution.
+
+The work shows how operational logistics data can be transformed into practical business insight while also demonstrating database efficiency, flexible NoSQL modelling, and evidence-based analysis.
